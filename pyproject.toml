@@ -1,5 +1,5 @@
 [project]
-name = "siggy"
+name = "siggler"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-siggy = "siggy:main"
+siggler = "siggler:main"
 
 [build-system]
 requires = ["hatchling"]

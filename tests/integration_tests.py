@@ -1,12 +1,12 @@
 import pytest
 
-import siggy
+import siggler
 
 model = "gpt-4o-mini"
 
 
 def test_tool_call(client):
-    @siggy.tool
+    @siggler.tool
     def get_weather(city: str, date: str) -> str:
         """
         Get the weather for a city on a specific date.
@@ -24,13 +24,13 @@ def test_tool_call(client):
     output = response.output[0]
 
     assert output.type == "function_call"
-    weather_forecast = siggy.call(output.name, output.arguments)
+    weather_forecast = siggler.call(output.name, output.arguments)
     assert weather_forecast == "The weather in Edinburgh was sunny on 2000-01-01."
 
 @pytest.mark.asyncio
 async def test_tool_acall(client):
 
-    @siggy.tool
+    @siggler.tool
     async def get_weather(city: str, date: str) -> str:
         """
         Get the weather for a city on a specific date.
@@ -48,5 +48,5 @@ async def test_tool_acall(client):
     output = response.output[0]
 
     assert output.type == "function_call"
-    weather_forecast = await siggy.acall(output.name, output.arguments)
+    weather_forecast = await siggler.acall(output.name, output.arguments)
     assert weather_forecast == "The weather in Edinburgh was sunny on 2000-01-01."

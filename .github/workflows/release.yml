@@ -1,0 +1,36 @@
+name: Publish siggler to PyPI
+
+# Trigger on tag pushes (e.g., v1.0.0)
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv package manager
+        uses: astral-sh/setup-uv@v5
+        with:
+          # Pin to a specific version if desired (e.g., 0.6.9)
+          version: "0.6.9"
+
+      - name: Set up Python using uv
+        run: uv python install
+
+      - name: Install project dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Build distribution packages
+        run: uv build --no-sources
+
+      - name: Publish package to PyPI
+        env:
+          # UV_PUBLISH_TOKEN should be set in your repository secrets (e.g., PYPI_API_TOKEN)
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: uv publish
