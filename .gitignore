@@ -1,0 +1,5 @@
+.env
+.python-version
+repomix-output.xml
+.venv
+.idea
